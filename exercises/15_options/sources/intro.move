@@ -75,7 +75,7 @@ module intro::intro {
     }
     
     /// 提取值（必须是 Some，会消耗 Option）
-    public fun extract(opt: Option<u64>): u64 {
+    public fun extract(mut opt: Option<u64>): u64 {
         // TODO: 使用 option::extract 提取值
         // HINT: 这会消耗 Option，返回其中的值
         

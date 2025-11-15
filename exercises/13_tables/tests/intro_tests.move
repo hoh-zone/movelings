@@ -2,7 +2,6 @@
 module intro::intro_tests {
     use sui::table::{Self, Table};
     use sui::tx_context::{Self, TxContext};
-    use sui::transfer;
     use intro::intro;
 
     #[test]
@@ -10,7 +9,7 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let table = intro::create_table(&mut ctx);
         assert!(intro::get_size(&table) == 0, 1);
-        transfer::delete(object::id_from_address(@intro));
+        // 表在测试结束时自动销毁
     }
 
     #[test]
@@ -157,7 +156,7 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let mut table = intro::create_string_table(&mut ctx);
         intro::add_string_entry(&mut table, 1, b"hello");
-        assert!(intro::contains_key(&table, 1), 27);
+        assert!(intro::contains_key_string(&table, 1), 27);
     }
 
     #[test]

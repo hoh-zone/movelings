@@ -34,14 +34,14 @@ module intro::intro {
         // TODO: 使用 table::new 创建新表
         // HINT: table::new<键类型, 值类型>(ctx)
         
-        table::new(ctx)
+        table::new<u64, u64>(ctx)
     }
     
     /// 创建字符串表
     public fun create_string_table(ctx: &mut TxContext): Table<u64, vector<u8>> {
         // TODO: 创建键为 u64，值为 vector<u8> 的表
         
-        table::new(ctx)
+        table::new<u64, vector<u8>>(ctx)
     }
     
     /// === 表的添加操作 ===
@@ -220,6 +220,16 @@ module intro::intro {
         // TODO: 添加键值对到字符串表
         
         table::add(table, key, value);
+    }
+    
+    /// 检查字符串表中的键是否存在
+    public fun contains_key_string(
+        table: &Table<u64, vector<u8>>,
+        key: u64
+    ): bool {
+        // TODO: 使用 table::contains 检查键是否存在
+        
+        table::contains(table, key)
     }
     
     /// 获取字符串值

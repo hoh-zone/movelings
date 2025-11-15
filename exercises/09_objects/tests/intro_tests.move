@@ -2,7 +2,6 @@
 module intro::intro_tests {
     use sui::object::{Self, UID};
     use sui::tx_context::{Self, TxContext};
-    use sui::transfer;
     use intro::intro;
 
     #[test]
@@ -10,7 +9,7 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let obj = intro::create_object(42, &mut ctx);
         assert!(intro::get_value(&obj) == 42, 1);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -19,7 +18,7 @@ module intro::intro_tests {
         let obj = intro::create_object(100, &mut ctx);
         let value = intro::get_value(&obj);
         assert!(value == 100, 2);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -28,7 +27,7 @@ module intro::intro_tests {
         let mut obj = intro::create_object(50, &mut ctx);
         intro::set_value(&mut obj, 75);
         assert!(intro::get_value(&obj) == 75, 3);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -46,7 +45,7 @@ module intro::intro_tests {
         let mut obj = intro::create_object(10, &mut ctx);
         intro::increment_value(&mut obj, 5);
         assert!(intro::get_value(&obj) == 15, 4);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -55,7 +54,7 @@ module intro::intro_tests {
         let mut obj = intro::create_object(10, &mut ctx);
         intro::decrement_value(&mut obj, 3);
         assert!(intro::get_value(&obj) == 7, 5);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -64,7 +63,7 @@ module intro::intro_tests {
         let mut obj = intro::create_object(5, &mut ctx);
         intro::decrement_value(&mut obj, 10);  // 会设为 0
         assert!(intro::get_value(&obj) == 0, 6);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -73,7 +72,7 @@ module intro::intro_tests {
         let obj = intro::create_object(42, &mut ctx);
         let id = intro::get_id(&obj);
         // 测试获取 ID
-        transfer::delete(object::id(&id));
+        object::delete(object::id(&id));
     }
 
     #[test]
@@ -83,7 +82,7 @@ module intro::intro_tests {
         let obj = intro::create_complex_object(10, name, true, &mut ctx);
         assert!(intro::get_counter(&obj) == 10, 7);
         assert!(intro::is_enabled(&obj) == true, 8);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -92,7 +91,7 @@ module intro::intro_tests {
         let obj = intro::create_complex_object(20, b"test", false, &mut ctx);
         let counter = intro::get_counter(&obj);
         assert!(counter == 20, 9);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -102,7 +101,7 @@ module intro::intro_tests {
         let obj = intro::create_complex_object(0, name, true, &mut ctx);
         let retrieved_name = intro::get_name(&obj);
         assert!(retrieved_name == name, 10);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -110,7 +109,7 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let obj = intro::create_complex_object(0, b"test", true, &mut ctx);
         assert!(intro::is_enabled(&obj) == true, 11);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -119,7 +118,7 @@ module intro::intro_tests {
         let mut obj = intro::create_complex_object(5, b"test", true, &mut ctx);
         intro::increment_counter(&mut obj);
         assert!(intro::get_counter(&obj) == 6, 12);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -130,7 +129,7 @@ module intro::intro_tests {
         assert!(intro::is_enabled(&obj) == false, 13);
         intro::toggle_enabled(&mut obj);
         assert!(intro::is_enabled(&obj) == true, 14);
-        transfer::delete(object::id(&obj.id));
+        object::delete(object::id(&obj.id));
     }
 
     #[test]
@@ -147,8 +146,8 @@ module intro::intro_tests {
         let are_same_self = intro::compare_ids(&obj1, &obj1);
         assert!(are_same_self == true, 16);
         
-        transfer::delete(object::id(&obj1.id));
-        transfer::delete(object::id(&obj2.id));
+        object::delete(object::id(&obj1.id));
+        object::delete(object::id(&obj2.id));
     }
 
     #[test]

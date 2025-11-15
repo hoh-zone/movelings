@@ -7,7 +7,7 @@
 // HINT: 使用 use 导入特定项：use address::module_name::Item;
 // HINT: 使用 use 导入多项：use address::module_name::{Item1, Item2};
 // HINT: 使用别名导入：use address::module_name::{Self as Alias};
-// HINT: 可见性修饰符：public, public(friend), public(script), private
+// HINT: 可见性修饰符：public, public(friend), public entry, private
 // HINT: friend 模块：friend address::module_name;
 // TODO: 理解模块的定义和结构
 // TODO: 学习导入语句的使用
@@ -51,17 +51,18 @@ module intro::intro {
         value * 2
     }
     
-    /// 脚本函数（只有脚本可以调用）
-    public(script) fun script_function(value: u64): u64 {
+    /// 入口函数（可以直接调用）
+    public entry fun entry_function(value: u64, ctx: &mut TxContext): u64 {
         // TODO: 返回 value + 1
+        // HINT: entry 函数可以被直接调用，通常需要 ctx 参数
         
         value + 1
     }
     
-    /// 公共结构体
+    /// 公共结构体（字段也是公开的）
     public struct Point has copy, drop {
-        x: u64,
-        y: u64,
+        public x: u64,
+        public y: u64,
     }
     
     /// 创建点

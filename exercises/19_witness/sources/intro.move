@@ -95,7 +95,8 @@ module intro::intro {
         // HINT: 实际应用中可能会销毁旧的 cap
         
         let AdminCap { id } = cap;
-        transfer::delete(id);
+        let obj_id = object::id(&id);
+        object::delete(obj_id);
         (AdminWitness {}, AdminCap { id: object::new(ctx) })
     }
     

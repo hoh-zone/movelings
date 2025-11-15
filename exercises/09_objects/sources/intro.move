@@ -229,11 +229,12 @@ module intro::intro {
     /// 删除对象并返回其值
     public fun delete_object(obj: MyObject): u64 {
         // TODO: 删除对象并返回其 value
-        // HINT: 使用 transfer::delete(id) 删除对象
+        // HINT: 使用 object::delete(id) 删除对象
         // HINT: 先提取 value，然后删除对象
         
         let MyObject { id, value } = obj;
-        transfer::delete(id);
+        let obj_id = object::id(&id);
+        object::delete(obj_id);
         value
     }
 }

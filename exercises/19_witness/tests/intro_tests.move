@@ -11,7 +11,7 @@ module intro::intro_tests {
         let witness = intro::WITNESS {};
         let resource = intro::create_resource(witness, 42, &mut ctx);
         // 测试创建成功
-        transfer::delete(object::id(&resource.id));
+        object::delete(object::id(&resource.id));
     }
 
     #[test]
@@ -30,7 +30,7 @@ module intro::intro_tests {
         let (witness, new_cap) = intro::create_admin_witness(cap, &mut ctx);
         let result = intro::admin_only_action(witness, 10);
         assert!(result == 20, 1);  // 10 * 2 = 20
-        transfer::delete(object::id(&new_cap.id));
+        object::delete(object::id(&new_cap.id));
     }
 
     #[test]
@@ -42,7 +42,7 @@ module intro::intro_tests {
         let (witness, new_cap) = intro::create_admin_witness(cap, &mut ctx);
         let result = intro::admin_only_action(witness, 50);
         assert!(result == 100, 2);  // 50 * 2 = 100
-        transfer::delete(object::id(&new_cap.id));
+        object::delete(object::id(&new_cap.id));
     }
 
     #[test]
@@ -50,7 +50,7 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let coin = intro::mint_usd(100, &mut ctx);
         // 测试创建 USD 币种成功
-        transfer::delete(object::id(&coin.id));
+        object::delete(object::id(&coin.id));
     }
 
     #[test]
@@ -58,7 +58,7 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let coin = intro::mint_eur(200, &mut ctx);
         // 测试创建 EUR 币种成功
-        transfer::delete(object::id(&coin.id));
+        object::delete(object::id(&coin.id));
     }
 
     #[test]
@@ -67,7 +67,7 @@ module intro::intro_tests {
         let witness = intro::get_init_witness();
         let initialized = intro::initialize(witness, &mut ctx);
         assert!(initialized.initialized, 3);
-        transfer::delete(object::id(&initialized.id));
+        object::delete(object::id(&initialized.id));
     }
 
     #[test]
@@ -76,6 +76,6 @@ module intro::intro_tests {
         let mut ctx = tx_context::dummy();
         let initialized = intro::initialize(witness, &mut ctx);
         // 测试初始化成功
-        transfer::delete(object::id(&initialized.id));
+        object::delete(object::id(&initialized.id));
     }
 }

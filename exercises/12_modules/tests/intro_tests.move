@@ -32,22 +32,22 @@ module intro::intro_tests {
 
     #[test]
     fun test_create_some() {
-        let some = intro::create_some(42);
         use std::option;
+        let some = intro::create_some(42);
         assert!(option::is_some(&some), 7);
     }
 
     #[test]
     fun test_create_none() {
-        let none = intro::create_none();
         use std::option;
+        let none = intro::create_none();
         assert!(option::is_none(&none), 8);
     }
 
     #[test]
     fun test_create_string() {
-        let s = intro::create_string();
         use std::string;
+        let s = intro::create_string();
         assert!(string::equals(&s, &string::utf8(b"Hello")), 9);
     }
 
