@@ -1,6 +1,6 @@
 #[test_only]
 module intro::intro_tests {
-    use std::string::{Self, String};
+    use std::string::Self;
     use intro::intro;
 
     #[test]
@@ -19,14 +19,14 @@ module intro::intro_tests {
     #[test]
     fun test_create_string() {
         let s = intro::create_string();
-        assert!(string::equals(&s, &string::utf8(b"Hello")), 4);
+        assert!(intro::equals(&s, &string::utf8(b"Hello")), 4);
     }
 
     #[test]
     fun test_bytes_to_string() {
         let bytes = b"test";
         let s = intro::bytes_to_string(bytes);
-        assert!(string::equals(&s, &string::utf8(b"test")), 5);
+        assert!(intro::equals(&s, &string::utf8(b"test")), 5);
     }
 
     #[test]
@@ -57,35 +57,35 @@ module intro::intro_tests {
         let s1 = string::utf8(b"Hello, ");
         let s2 = string::utf8(b"Move!");
         let result = intro::concatenate(s1, s2);
-        assert!(string::equals(&result, &string::utf8(b"Hello, Move!")), 10);
+        assert!(intro::equals(&result, &string::utf8(b"Hello, Move!")), 10);
     }
 
     #[test]
     fun test_concatenate_literal() {
         let s = string::utf8(b"Hello, ");
         let result = intro::concatenate_literal(s, b"World!");
-        assert!(string::equals(&result, &string::utf8(b"Hello, World!")), 11);
+        assert!(intro::equals(&result, &string::utf8(b"Hello, World!")), 11);
     }
 
     #[test]
     fun test_substring() {
         let s = string::utf8(b"Hello, Move!");
         let sub = intro::substring(s, 0, 5);
-        assert!(string::equals(&sub, &string::utf8(b"Hello")), 12);
+        assert!(intro::equals(&sub, &string::utf8(b"Hello")), 12);
     }
 
     #[test]
     fun test_take_prefix() {
         let s = string::utf8(b"Hello, Move!");
         let prefix = intro::take_prefix(s, 5);
-        assert!(string::equals(&prefix, &string::utf8(b"Hello")), 13);
+        assert!(intro::equals(&prefix, &string::utf8(b"Hello")), 13);
     }
 
     #[test]
     fun test_take_suffix() {
         let s = string::utf8(b"Hello, Move!");
         let suffix = intro::take_suffix(s, 7);
-        assert!(string::equals(&suffix, &string::utf8(b"Move!")), 14);
+        assert!(intro::equals(&suffix, &string::utf8(b"Move!")), 14);
     }
 
     #[test]
@@ -114,16 +114,16 @@ module intro::intro_tests {
         let s1 = intro::number_to_string(1);
         let s42 = intro::number_to_string(42);
         
-        assert!(string::equals(&s0, &string::utf8(b"0")), 19);
-        assert!(string::equals(&s1, &string::utf8(b"1")), 20);
-        assert!(string::equals(&s42, &string::utf8(b"42")), 21);
+        assert!(intro::equals(&s0, &string::utf8(b"0")), 19);
+        assert!(intro::equals(&s1, &string::utf8(b"1")), 20);
+        assert!(intro::equals(&s42, &string::utf8(b"42")), 21);
     }
 
     #[test]
     fun test_repeat_string() {
         let s = string::utf8(b"Hi");
         let repeated = intro::repeat_string(s, 3);
-        assert!(string::equals(&repeated, &string::utf8(b"HiHiHi")), 22);
+        assert!(intro::equals(&repeated, &string::utf8(b"HiHiHi")), 22);
     }
 
     #[test]
@@ -131,7 +131,7 @@ module intro::intro_tests {
         let s = string::utf8(b"Hello, Move!");
         let prefix = string::utf8(b"Hello, ");
         let trimmed = intro::trim_start(s, &prefix);
-        assert!(string::equals(&trimmed, &string::utf8(b"Move!")), 23);
+        assert!(intro::equals(&trimmed, &string::utf8(b"Move!")), 23);
     }
 
     #[test]
@@ -148,7 +148,7 @@ module intro::intro_tests {
             string::utf8(b"Move")
         ];
         let joined = intro::join_strings(strings);
-        assert!(string::equals(&joined, &string::utf8(b"Hello, Move")), 25);
+        assert!(intro::equals(&joined, &string::utf8(b"Hello, Move")), 25);
     }
 }
 

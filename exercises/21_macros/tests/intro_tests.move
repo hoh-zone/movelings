@@ -1,183 +1,127 @@
 #[test_only]
 module intro::intro_tests {
-    use std::option;
     use intro::intro;
 
     #[test]
     fun test_validate_positive() {
-        let result = intro::validate_positive(42, 0);
+        let result = intro::validate_positive!(42, 0);
         assert!(result == 42, 1);
     }
 
     #[test, expected_failure(abort_code = 0)]
     fun test_validate_positive_fail() {
-        intro::validate_positive(0, 0);
+        intro::validate_positive!(0, 0);
     }
 
     #[test]
-    fun test_validate_range() {
-        let result = intro::validate_range(5, 0, 10, 0);
-        assert!(result == 5, 2);
+    fun test_assert_eq() {
+        intro::assert_eq!(5, 5, 0);
     }
 
-    #[test, expected_failure(abort_code = 0)]
-    fun test_validate_range_fail() {
-        intro::validate_range(15, 0, 10, 0);
-    }
-
-    #[test]
-    fun test_create_default_config() {
-        let config = intro::create_default_config();
-        assert!(config.max_size == 1000, 3);
-        assert!(config.min_size == 10, 4);
-        assert!(config.enabled == true, 5);
+    #[test, expected_failure(abort_code = 1)]
+    fun test_assert_eq_fail() {
+        intro::assert_eq!(5, 6, 1);
     }
 
     #[test]
-    fun test_create_config() {
-        let config = intro::create_config(500, 5, false);
-        assert!(config.max_size == 500, 6);
-        assert!(config.min_size == 5, 7);
-        assert!(config.enabled == false, 8);
-    }
-
-    #[test]
-    fun test_first() {
+    fun test_map() {
         let vec = vector[1, 2, 3];
-        let result = intro::first(&vec);
-        assert!(option::is_some(&result), 9);
-        assert!(*option::borrow(&result) == 1, 10);
-        
-        let empty = vector::empty<u64>();
-        let result2 = intro::first(&empty);
-        assert!(option::is_none(&result2), 11);
+        let doubled: vector<u64> = intro::map!(vec, |x| 2 * x);
+        assert!(doubled.length() == 3, 2);
+        assert!(doubled[0] == 2, 3);
+        assert!(doubled[1] == 4, 4);
+        assert!(doubled[2] == 6, 5);
     }
 
     #[test]
-    fun test_last() {
-        let vec = vector[1, 2, 3, 4];
-        let result = intro::last(&vec);
-        assert!(option::is_some(&result), 12);
-        assert!(*option::borrow(&result) == 4, 13);
-        
-        let empty = vector::empty<u64>();
-        let result2 = intro::last(&empty);
-        assert!(option::is_none(&result2), 14);
-    }
-
-    #[test]
-    fun test_map_values() {
+    fun test_for_imm() {
         let vec = vector[1, 2, 3];
-        let result = intro::map_values(vec);
-        assert!(vector::length(&result) == 3, 15);
-        assert!(*vector::borrow(&result, 0) == 2, 16);
-        assert!(*vector::borrow(&result, 1) == 4, 17);
-        assert!(*vector::borrow(&result, 2) == 6, 18);
+        let mut sum = 0;
+        intro::for_imm!(&vec, |x| {
+            sum = sum + *x;
+        });
+        assert!(sum == 6, 6);
     }
 
     #[test]
-    fun test_filter_positive() {
-        let vec = vector[0, 1, 0, 2, 0, 3];
-        let result = intro::filter_positive(vec);
-        assert!(vector::length(&result) == 3, 19);
-        assert!(*vector::borrow(&result, 0) == 1, 20);
-        assert!(*vector::borrow(&result, 1) == 2, 21);
-        assert!(*vector::borrow(&result, 2) == 3, 22);
+    fun test_for_mut() {
+        let mut vec = vector[1, 2, 3];
+        intro::for_mut!(&mut vec, |x| {
+            *x = *x * 2;
+        });
+        assert!(vec[0] == 2, 7);
+        assert!(vec[1] == 4, 8);
+        assert!(vec[2] == 6, 9);
     }
 
     #[test]
-    fun test_create_origin() {
-        let point = intro::create_origin();
-        assert!(point.x == 0, 23);
-        assert!(point.y == 0, 24);
-    }
-
-    #[test]
-    fun test_create_point() {
-        let point = intro::create_point(10, 20);
-        assert!(point.x == 10, 25);
-        assert!(point.y == 20, 26);
-    }
-
-    #[test]
-    fun test_safe_divide_with_code() {
-        let result1 = intro::safe_divide_with_code(10, 2, 0);
-        assert!(option::is_some(&result1), 27);
-        assert!(*option::borrow(&result1) == 5, 28);
+    fun test_inspect() {
+        let opt = option::some(42);
+        let mut value = 0;
+        intro::inspect!(&opt, |x| {
+            value = *x;
+        });
+        assert!(value == 42, 10);
         
-        let result2 = intro::safe_divide_with_code(10, 0, 0);
-        assert!(option::is_none(&result2), 29);
+        let none = option::none<u64>();
+        let mut called = false;
+        intro::inspect!(&none, |_x| {
+            called = true;
+        });
+        assert!(called == false, 11);
     }
 
     #[test]
-    fun test_assert_and_return() {
-        let result = intro::assert_and_return(42, true, 0);
-        assert!(result == 42, 30);
-    }
-
-    #[test, expected_failure(abort_code = 0)]
-    fun test_assert_and_return_fail() {
-        intro::assert_and_return(42, false, 0);
-    }
-
-    #[test]
-    fun test_swap_values() {
-        let (a, b) = intro::swap_values(1, 2);
-        assert!(a == 2, 31);
-        assert!(b == 1, 32);
-    }
-
-    #[test]
-    fun test_duplicate_value() {
-        let (a, b) = intro::duplicate_value(42);
-        assert!(a == 42, 33);
-        assert!(b == 42, 34);
-    }
-
-    #[test]
-    fun test_find_index() {
-        let vec = vector[10, 20, 30, 40];
+    fun test_is_some_and() {
+        let opt = option::some(42);
+        let is_zero = intro::is_some_and!(&opt, |x| *x == 0);
+        assert!(is_zero == false, 12);
         
-        let result1 = intro::find_index(&vec, 20);
-        assert!(option::is_some(&result1), 35);
-        assert!(*option::borrow(&result1) == 1, 36);
+        let is_forty_two = intro::is_some_and!(&opt, |x| *x == 42);
+        assert!(is_forty_two, 13);
         
-        let result2 = intro::find_index(&vec, 100);
-        assert!(option::is_none(&result2), 37);
+        let none = option::none<u64>();
+        let result = intro::is_some_and!(&none, |_x| true);
+        assert!(result == false, 14);
     }
 
     #[test]
-    fun test_contains_value() {
-        let vec = vector[1, 2, 3, 4];
+    fun test_add() {
+        let result1 = intro::add!(10u64, 20u64);
+        assert!(result1 == 30, 15);
         
-        assert!(intro::contains_value(&vec, 2), 38);
-        assert!(intro::contains_value(&vec, 5) == false, 39);
+        let result2 = intro::add!(5u8, 3u8);
+        assert!(result2 == 8, 16);
     }
 
     #[test]
-    fun test_combine_vectors() {
-        let vec1 = vector[1, 2];
-        let vec2 = vector[3, 4];
-        let result = intro::combine_vectors(vec1, vec2);
-        
-        assert!(vector::length(&result) == 4, 40);
-        assert!(*vector::borrow(&result, 0) == 1, 41);
-        assert!(*vector::borrow(&result, 1) == 2, 42);
-        assert!(*vector::borrow(&result, 2) == 3, 43);
-        assert!(*vector::borrow(&result, 3) == 4, 44);
+    fun test_swap() {
+        let (a, b): (u64, u64) = intro::swap!(1, 2);
+        assert!(a == 2, 17);
+        assert!(b == 1, 18);
     }
 
     #[test]
-    fun test_take_n() {
-        let vec = vector[1, 2, 3, 4, 5];
+    fun test_when() {
+        let mut executed = false;
+        intro::when!(true, || {
+            executed = true;
+        });
+        assert!(executed, 19);
         
-        let result1 = intro::take_n(vec, 3);
-        assert!(vector::length(&result1) == 3, 45);
-        assert!(*vector::borrow(&result1, 0) == 1, 46);
-        assert!(*vector::borrow(&result1, 2) == 3, 47);
-        
-        let vec2 = vector[1, 2];
-        let result2 = intro::take_n(vec2, 5);
-        assert!(vector::length(&result2) == 2, 48);  // 只取可用的元素
+        let mut not_executed = false;
+        intro::when!(false, || {
+            not_executed = true;
+        });
+        assert!(not_executed == false, 20);
+    }
+
+    #[test]
+    fun test_repeat() {
+        let mut count = 0;
+        intro::repeat!(5, || {
+            count = count + 1;
+        });
+        assert!(count == 5, 21);
     }
 }

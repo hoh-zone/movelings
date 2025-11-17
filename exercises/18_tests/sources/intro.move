@@ -27,34 +27,26 @@ module intro::intro {
     
     /// 添加两个数字
     public fun add(a: u64, b: u64): u64 {
-        // TODO: 返回 a + b
         
         a + b
     }
     
     /// 乘以两个数字
     public fun multiply(a: u64, b: u64): u64 {
-        // TODO: 返回 a * b
         
         a * b
     }
     
     /// 检查数字是否为偶数
     public fun is_even(num: u64): bool {
-        // TODO: 返回 num % 2 == 0
         
         num % 2 == 0
     }
     
     /// 获取最大值
     public fun max(a: u64, b: u64): u64 {
-        // TODO: 返回 a 和 b 中的较大值
         
-        if (a > b) {
-            a
-        } else {
-            b
-        }
+        if (a >= b) a else b
     }
     
     /// === 错误处理 ===
@@ -65,22 +57,22 @@ module intro::intro {
     
     /// 除法（如果除数为 0 则中止）
     public fun divide(a: u64, b: u64): u64 {
-        // TODO: 如果 b == 0，中止并返回错误代码 EZero；否则返回 a / b
         
         if (b == 0) {
             abort EZero
-        };
-        a / b
+        } else {
+            a / b
+        }
     }
     
     /// 断言正数（如果不是正数则中止）
     public fun assert_positive(num: u64): u64 {
-        // TODO: 如果 num == 0，中止并返回错误代码 ENegative；否则返回 num
         
         if (num == 0) {
             abort ENegative
-        };
-        num
+        } else {
+            num
+        }
     }
     
     /// === 结构体（用于测试） ===
@@ -93,21 +85,18 @@ module intro::intro {
     
     /// 创建点
     public fun create_point(x: u64, y: u64): Point {
-        // TODO: 创建并返回 Point 实例
         
         Point { x, y }
     }
     
     /// 获取 x 坐标
     public fun get_x(p: &Point): u64 {
-        // TODO: 返回点的 x 坐标
         
         p.x
     }
     
     /// 获取 y 坐标
     public fun get_y(p: &Point): u64 {
-        // TODO: 返回点的 y 坐标
         
         p.y
     }
@@ -116,21 +105,18 @@ module intro::intro {
     
     /// 创建包含指定值的向量
     public fun create_vector(values: vector<u64>): vector<u64> {
-        // TODO: 直接返回 values（移动）
         
         values
     }
     
     /// 向向量添加元素
     public fun add_element(vec: &mut vector<u64>, value: u64) {
-        // TODO: 使用 vector::push_back 添加元素
         
         vector::push_back(vec, value);
     }
     
     /// 获取向量长度
     public fun get_length(vec: &vector<u64>): u64 {
-        // TODO: 使用 vector::length 获取长度
         
         vector::length(vec)
     }

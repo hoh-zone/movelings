@@ -10,7 +10,7 @@ module intro::intro_tests {
         // HINT: 使用 assert! 进行断言
         
         let result = intro::add(2, 3);
-        assert!(result == 5, 0);
+        // 在此处填写代码
     }
     
     #[test]
@@ -18,7 +18,7 @@ module intro::intro_tests {
         // TODO: 测试 multiply 函数，断言 4 * 5 == 20
         
         let result = intro::multiply(4, 5);
-        assert!(result == 20, 1);
+        // 在此处填写代码
     }
     
     #[test]
@@ -26,11 +26,7 @@ module intro::intro_tests {
         // TODO: 测试 is_even 函数
         // HINT: 测试偶数和奇数的情况
         
-        assert!(intro::is_even(2), 2);
-        assert!(intro::is_even(4), 3);
-        assert!(intro::is_even(0), 4);
-        assert!(intro::is_even(1) == false, 5);
-        assert!(intro::is_even(3) == false, 6);
+        // 在此处填写代码
     }
     
     #[test]
@@ -38,9 +34,7 @@ module intro::intro_tests {
         // TODO: 测试 max 函数
         // HINT: 测试不同的组合
         
-        assert!(intro::max(1, 2) == 2, 7);
-        assert!(intro::max(5, 3) == 5, 8);
-        assert!(intro::max(10, 10) == 10, 9);
+        // 在此处填写代码
     }
     
     /// === 测试结构体 ===
@@ -50,8 +44,7 @@ module intro::intro_tests {
         // TODO: 测试 create_point 函数，创建点并验证坐标
         
         let point = intro::create_point(10, 20);
-        assert!(intro::get_x(&point) == 10, 10);
-        assert!(intro::get_y(&point) == 20, 11);
+        // 在此处填写代码
     }
     
     #[test]
@@ -60,7 +53,7 @@ module intro::intro_tests {
         
         let point = intro::create_point(5, 15);
         let x = intro::get_x(&point);
-        assert!(x == 5, 12);
+        // 在此处填写代码
     }
     
     #[test]
@@ -69,7 +62,7 @@ module intro::intro_tests {
         
         let point = intro::create_point(5, 15);
         let y = intro::get_y(&point);
-        assert!(y == 15, 13);
+        // 在此处填写代码
     }
     
     /// === 测试向量操作 ===
@@ -79,7 +72,7 @@ module intro::intro_tests {
         // TODO: 测试 create_vector 函数
         
         let vec = intro::create_vector(vector[1, 2, 3]);
-        assert!(intro::get_length(&vec) == 3, 14);
+        // 在此处填写代码
     }
     
     #[test]
@@ -88,7 +81,7 @@ module intro::intro_tests {
         
         let mut vec = intro::create_vector(vector[1, 2]);
         intro::add_element(&mut vec, 3);
-        assert!(intro::get_length(&vec) == 3, 15);
+        // 在此处填写代码
     }
     
     #[test]
@@ -97,7 +90,7 @@ module intro::intro_tests {
         
         let vec = intro::create_vector(vector[1, 2, 3, 4]);
         let len = intro::get_length(&vec);
-        assert!(len == 4, 16);
+        // 在此处填写代码
     }
     
     /// === 测试多个条件 ===
@@ -110,9 +103,7 @@ module intro::intro_tests {
         let a = 10;
         let b = 20;
         
-        assert!(a < b, 17);
-        assert!(a + b == 30, 18);
-        assert!(a * b == 200, 19);
+        // 在此处填写代码
     }
     
     /// === 预期失败的测试 ===
@@ -138,7 +129,7 @@ module intro::intro_tests {
         // TODO: 测试正常除法，不应该失败
         
         let result = intro::divide(10, 2);
-        assert!(result == 5, 20);
+        // 在此处填写代码
     }
     
     #[test]
@@ -146,7 +137,7 @@ module intro::intro_tests {
         // TODO: 测试正常情况，不应该失败
         
         let result = intro::assert_positive(42);
-        assert!(result == 42, 21);
+        // 在此处填写代码
     }
     
     /// === 测试辅助函数 ===
@@ -165,7 +156,7 @@ module intro::intro_tests {
         // TODO: 使用辅助函数编写测试
         
         let value = helper_get_five();
-        assert!(value == 5, 22);
+        // 在此处填写代码
     }
     
     /// === 测试边界情况 ===
@@ -175,17 +166,11 @@ module intro::intro_tests {
         // TODO: 测试边界情况
         // HINT: 测试最小值、最大值、零值等
         
-        // 测试零
-        assert!(intro::add(0, 0) == 0, 23);
-        assert!(intro::multiply(0, 10) == 0, 24);
-        
-        // 测试大值
-        assert!(intro::add(100, 200) == 300, 25);
-        assert!(intro::multiply(10, 20) == 200, 26);
+        // 在此处填写代码
     }
     
     /// === 测试所有权 ===
-    
+
     #[test]
     fun test_ownership() {
         // TODO: 测试所有权转移
@@ -194,7 +179,7 @@ module intro::intro_tests {
         let vec = vector[1, 2, 3];
         let moved = intro::create_vector(vec);
         // vec 已不可用
-        assert!(intro::get_length(&moved) == 3, 27);
+        // 在此处填写代码
     }
     
     /// === 测试组合操作 ===
@@ -209,7 +194,6 @@ module intro::intro_tests {
         let sum_x = intro::add(intro::get_x(&point1), intro::get_x(&point2));
         let sum_y = intro::add(intro::get_y(&point1), intro::get_y(&point2));
         
-        assert!(sum_x == 4, 28);  // 1 + 3 = 4
-        assert!(sum_y == 6, 29);  // 2 + 4 = 6
+        // 在此处填写代码
     }
 }

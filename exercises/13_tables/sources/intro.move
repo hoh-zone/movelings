@@ -4,8 +4,8 @@
 // HINT: Table 是 Sui 中用于存储键值对的动态集合
 // HINT: 使用 table::new(ctx) 创建新表
 // HINT: 使用 table::add(table, key, value) 添加条目
-// HINT: 使用 table::borrow(table, key) 获取不可变引用
-// HINT: 使用 table::borrow_mut(table, key) 获取可变引用
+// HINT: 使用索引语法 &table[key] 获取不可变引用（Move 2024）
+// HINT: 使用索引语法 &mut table[key] 获取可变引用（Move 2024）
 // HINT: 使用 table::contains(table, key) 检查键是否存在
 // HINT: 使用 table::remove(table, key) 移除条目
 // HINT: 使用 table::length(table) 获取表大小
@@ -25,23 +25,20 @@
 /// Module: intro
 module intro::intro {
     use sui::table::{Self, Table};
-    use sui::tx_context::{Self, TxContext};
     
     /// === 表的创建 ===
     
     /// 创建新表
-    public fun create_table(ctx: &mut TxContext): Table<u64, u64> {
+    public fun create_table(ctx: &mut sui::tx_context::TxContext): Table<u64, u64> {
         // TODO: 使用 table::new 创建新表
         // HINT: table::new<键类型, 值类型>(ctx)
-        
-        table::new<u64, u64>(ctx)
+        // 在此处填写代码
     }
     
     /// 创建字符串表
-    public fun create_string_table(ctx: &mut TxContext): Table<u64, vector<u8>> {
+    public fun create_string_table(ctx: &mut sui::tx_context::TxContext): Table<u64, vector<u8>> {
         // TODO: 创建键为 u64，值为 vector<u8> 的表
-        
-        table::new<u64, vector<u8>>(ctx)
+        // 在此处填写代码
     }
     
     /// === 表的添加操作 ===
@@ -54,8 +51,7 @@ module intro::intro {
     ) {
         // TODO: 使用 table::add 添加键值对
         // HINT: table::add(table, key, value)
-        
-        table::add(table, key, value);
+        // 在此处填写代码
     }
     
     /// 添加多个条目
@@ -66,16 +62,8 @@ module intro::intro {
     ) {
         // TODO: 遍历 keys 和 values 向量，添加多个条目
         // HINT: 使用 while 循环，同时遍历两个向量
-        
-        let i = 0;
-        let len = vector::length(&keys);
-        
-        while (i < len) {
-            let key = *vector::borrow(&keys, i);
-            let value = *vector::borrow(&values, i);
-            table::add(table, key, value);
-            i = i + 1;
-        };
+        // HINT: 使用索引语法 keys[i] 和 values[i] 访问元素
+        // 在此处填写代码
     }
     
     /// === 表的查找操作 ===
@@ -85,10 +73,9 @@ module intro::intro {
         table: &Table<u64, u64>,
         key: u64
     ): &u64 {
-        // TODO: 使用 table::borrow 获取值的不可变引用
-        // HINT: table::borrow(table, key)
-        
-        table::borrow(table, key)
+        // TODO: 使用索引语法获取值的不可变引用
+        // HINT: &table[key]（Move 2024 语法）
+        // 在此处填写代码
     }
     
     /// 获取值（可变引用）
@@ -96,9 +83,9 @@ module intro::intro {
         table: &mut Table<u64, u64>,
         key: u64
     ): &mut u64 {
-        // TODO: 使用 table::borrow_mut 获取值的可变引用
-        
-        table::borrow_mut(table, key)
+        // TODO: 使用索引语法获取值的可变引用
+        // HINT: &mut table[key]（Move 2024 语法）
+        // 在此处填写代码
     }
     
     /// 检查键是否存在
@@ -107,8 +94,7 @@ module intro::intro {
         key: u64
     ): bool {
         // TODO: 使用 table::contains 检查键是否存在
-        
-        table::contains(table, key)
+        // 在此处填写代码
     }
     
     /// === 表的修改操作 ===
@@ -119,11 +105,9 @@ module intro::intro {
         key: u64,
         new_value: u64
     ) {
-        // TODO: 获取可变引用并更新值
-        // HINT: 使用 table::borrow_mut 获取引用，然后赋值
-        
-        let value_ref = table::borrow_mut(table, key);
-        *value_ref = new_value;
+        // TODO: 使用索引语法获取可变引用并更新值
+        // HINT: let value_ref = &mut table[key]; *value_ref = new_value;
+        // 在此处填写代码
     }
     
     /// 增加值
@@ -132,10 +116,8 @@ module intro::intro {
         key: u64,
         amount: u64
     ) {
-        // TODO: 获取可变引用并将值增加 amount
-        
-        let value_ref = table::borrow_mut(table, key);
-        *value_ref = *value_ref + amount;
+        // TODO: 使用索引语法获取可变引用并将值增加 amount
+        // 在此处填写代码
     }
     
     /// === 表的删除操作 ===
@@ -146,8 +128,7 @@ module intro::intro {
         key: u64
     ): u64 {
         // TODO: 使用 table::remove 移除条目并返回值
-        
-        table::remove(table, key)
+        // 在此处填写代码
     }
     
     /// === 表的查询操作 ===
@@ -155,8 +136,7 @@ module intro::intro {
     /// 获取表大小
     public fun get_size(table: &Table<u64, u64>): u64 {
         // TODO: 使用 table::length 获取表的大小
-        
-        table::length(table)
+        // 在此处填写代码
     }
     
     /// === 表的实用函数 ===
@@ -167,14 +147,8 @@ module intro::intro {
         key: u64
     ): (bool, u64) {
         // TODO: 如果键存在，返回 (true, value)；否则返回 (false, 0)
-        // HINT: 使用 table::contains 检查，然后使用 table::borrow 获取值
-        
-        if (table::contains(table, key)) {
-            let value_ref = table::borrow(table, key);
-            (true, *value_ref)
-        } else {
-            (false, 0)
-        }
+        // HINT: 使用 table::contains 检查，然后使用索引语法获取值
+        // 在此处填写代码
     }
     
     /// 插入或更新值
@@ -185,13 +159,8 @@ module intro::intro {
     ) {
         // TODO: 如果键存在则更新，否则添加
         // HINT: 使用 table::contains 检查，然后决定是更新还是添加
-        
-        if (table::contains(table, key)) {
-            let value_ref = table::borrow_mut(table, key);
-            *value_ref = value;
-        } else {
-            table::add(table, key, value);
-        };
+        // HINT: 更新时使用索引语法 &mut table[key]
+        // 在此处填写代码
     }
     
     /// 获取或插入默认值
@@ -202,11 +171,8 @@ module intro::intro {
     ): &u64 {
         // TODO: 如果键存在则返回值的引用，否则插入默认值并返回引用
         // HINT: 使用 table::contains 检查，然后决定是获取还是插入
-        
-        if (!table::contains(table, key)) {
-            table::add(table, key, default_value);
-        };
-        table::borrow(table, key)
+        // HINT: 获取时使用索引语法 &table[key]
+        // 在此处填写代码
     }
     
     /// === 字符串表操作 ===
@@ -218,8 +184,7 @@ module intro::intro {
         value: vector<u8>
     ) {
         // TODO: 添加键值对到字符串表
-        
-        table::add(table, key, value);
+        // 在此处填写代码
     }
     
     /// 检查字符串表中的键是否存在
@@ -228,8 +193,7 @@ module intro::intro {
         key: u64
     ): bool {
         // TODO: 使用 table::contains 检查键是否存在
-        
-        table::contains(table, key)
+        // 在此处填写代码
     }
     
     /// 获取字符串值
@@ -237,9 +201,9 @@ module intro::intro {
         table: &Table<u64, vector<u8>>,
         key: u64
     ): &vector<u8> {
-        // TODO: 获取字符串值的引用
-        
-        table::borrow(table, key)
+        // TODO: 使用索引语法获取字符串值的引用
+        // HINT: &table[key]
+        // 在此处填写代码
     }
     
     /// 连接字符串值
@@ -248,10 +212,18 @@ module intro::intro {
         key: u64,
         suffix: vector<u8>
     ) {
-        // TODO: 获取字符串值的可变引用，然后追加 suffix
+        // TODO: 使用索引语法获取字符串值的可变引用，然后追加 suffix
         // HINT: 使用 vector::append 追加
-        
-        let value_ref = table::borrow_mut(table, key);
-        vector::append(value_ref, suffix);
+        // 在此处填写代码
+    }
+    
+    /// 销毁空的数值表
+    public fun destroy_table(table: Table<u64, u64>) {
+        table::destroy_empty(table);
+    }
+    
+    /// 销毁空的字符串表
+    public fun destroy_string_table(table: Table<u64, vector<u8>>) {
+        table::destroy_empty(table);
     }
 }

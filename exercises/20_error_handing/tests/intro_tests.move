@@ -1,6 +1,5 @@
 #[test_only]
 module intro::intro_tests {
-    use std::option;
     use intro::intro;
 
     #[test]
@@ -157,7 +156,7 @@ module intro::intro_tests {
         assert!(result == 5, 22);
     }
 
-    #[test, expected_failure(abort_code = intro::Errors::Zero)]
+    #[test, expected_failure(abort_code = intro::EZero)]
     fun test_organized_divide_fail() {
         intro::organized_divide(10, 0);
     }

@@ -1,6 +1,5 @@
 #[test_only]
 module intro::intro_tests {
-    use std::option;
     use intro::intro;
 
     #[test]
@@ -180,13 +179,13 @@ module intro::intro_tests {
     #[test]
     fun test_flatten() {
         let inner = intro::create_some(42);
-        let outer = option::some(inner);
+        let outer = std::option::some(inner);
         let result = intro::flatten(outer);
         assert!(intro::is_some(&result), 40);
         assert!(*intro::borrow(&result) == 42, 41);
         
         let none_inner = intro::create_none();
-        let outer2 = option::some(none_inner);
+        let outer2 = std::option::some(none_inner);
         let result2 = intro::flatten(outer2);
         assert!(intro::is_none(&result2), 42);
     }

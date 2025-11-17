@@ -22,29 +22,26 @@
 
 /// Module: intro
 module intro::intro {
-    
+
     /// === 基本泛型函数 ===
     
     /// 恒等函数（返回输入值）
     public fun identity<T>(x: T): T {
         // TODO: 直接返回 x
-        
-        x
+        // 在此处填写代码
     }
     
     /// 交换两个值
     public fun swap<T>(x: T, y: T): (T, T) {
         // TODO: 返回 (y, x)，交换两个值的位置
-        
-        (y, x)
+        // 在此处填写代码
     }
     
     /// 返回两个值中较大的一个（需要比较）
-    public fun max<T: copy + drop>(x: T, y: T): T {
+    public fun max<T: copy + drop>(x: T, _y: T): T {
         // TODO: 简化版本，返回第一个值
         // HINT: Move 中没有通用的比较，这里简化处理
-        
-        x
+        // 在此处填写代码
     }
     
     /// === 能力约束 ===
@@ -52,12 +49,11 @@ module intro::intro {
     /// 复制值（需要 copy 能力）
     public fun duplicate<T: copy + drop>(item: T): (T, T) {
         // TODO: 返回 (item, item) - 需要 copy 能力才能复制
-        
-        (item, item)
+        // 在此处填写代码
     }
     
     /// 丢弃值（需要 drop 能力）
-    public fun consume<T: drop>(item: T) {
+    public fun consume<T: drop>(_item: T) {
         // TODO: 函数体可以为空，item 会被自动丢弃
         // HINT: 因为有 drop 能力，可以隐式丢弃
         
@@ -68,50 +64,44 @@ module intro::intro {
     public fun store_value<T: store>(item: T): T {
         // TODO: 直接返回 item
         // HINT: 因为有 store 能力，可以存储在全局存储中
-        
-        item
+        // 在此处填写代码
     }
     
     /// === 泛型结构体 ===
     
     /// 泛型盒子
-    struct Box<T> has copy, drop {
+    public struct Box<T> has copy, drop, store {
         value: T,
     }
     
     /// 创建盒子
     public fun create_box<T>(value: T): Box<T> {
         // TODO: 创建并返回 Box<T> 实例
-        
-        Box { value }
+        // 在此处填写代码
     }
     
     /// 获取盒子中的值
     public fun get_value<T>(box: &Box<T>): &T {
         // TODO: 返回盒子中值的引用
-        
-        &box.value
+        // 在此处填写代码
     }
     
     /// 从盒子中取出值
     public fun unwrap<T>(box: Box<T>): T {
         // TODO: 解构 Box 并返回值
-        
-        let Box { value } = box;
-        value
+        // 在此处填写代码
     }
     
     /// 更新盒子中的值（需要可变引用）
-    public fun set_value<T>(box: &mut Box<T>, value: T) {
+    public fun set_value<T: drop>(box: &mut Box<T>, value: T) {
         // TODO: 设置盒子中的值
-        
-        box.value = value;
+        // 在此处填写代码
     }
     
     /// === 多个类型参数 ===
     
     /// 泛型对
-    struct Pair<T1, T2> has copy, drop {
+    public struct Pair<T1, T2> has copy, drop {
         first: T1,
         second: T2,
     }
@@ -119,52 +109,43 @@ module intro::intro {
     /// 创建对
     public fun create_pair<T1, T2>(first: T1, second: T2): Pair<T1, T2> {
         // TODO: 创建并返回 Pair 实例
-        
-        Pair { first, second }
+        // 在此处填写代码
     }
     
     /// 获取第一个元素
     public fun get_first<T1, T2>(pair: &Pair<T1, T2>): &T1 {
         // TODO: 返回 first 字段的引用
-        
-        &pair.first
+        // 在此处填写代码
     }
     
     /// 获取第二个元素
     public fun get_second<T1, T2>(pair: &Pair<T1, T2>): &T2 {
         // TODO: 返回 second 字段的引用
-        
-        &pair.second
+        // 在此处填写代码
     }
     
     /// 交换对中的元素
     public fun swap_pair<T1, T2>(pair: Pair<T1, T2>): Pair<T2, T1> {
         // TODO: 创建新对，交换 first 和 second
-        
-        let Pair { first, second } = pair;
-        Pair { first: second, second: first }
+        // 在此处填写代码
     }
     
-    /// === 泛型枚举 ===
+    /// === 泛型“枚举”（实现为结构体以便能力管理与简化解构）===
     
-    /// 可选值枚举
-    enum Option<T> {
-        None,
-        Some(T),
+    /// 可选值（用结构体实现，避免枚举解构限制）
+    public struct Option<T: store + drop> has store, drop {
+        is_some: bool,
+        items: vector<T>, // 0 或 1 个元素
     }
     
     /// 创建 Some
-    public fun some<T>(value: T): Option<T> {
-        // TODO: 返回 Option::Some(value)
-        
-        Option::Some(value)
+    public fun some<T: store + drop>(value: T): Option<T> {
+        // 在此处填写代码
     }
     
     /// 创建 None
-    public fun none<T>(): Option<T> {
-        // TODO: 返回 Option::None
-        
-        Option::None
+    public fun none<T: store + drop>(): Option<T> {
+        // 在此处填写代码
     }
     
     /// === 能力约束组合 ===
@@ -172,46 +153,37 @@ module intro::intro {
     /// 接受有 copy 和 drop 能力的类型
     public fun copy_and_drop<T: copy + drop>(item: T): T {
         // TODO: 复制 item 然后返回副本
-        
-        let (copy, _original) = (item, item);
-        copy
+        // 在此处填写代码
     }
     
     /// 接受有 copy、drop 和 store 能力的类型
     public fun copy_drop_store<T: copy + drop + store>(item: T): T {
         // TODO: 直接返回 item
-        
-        item
+        // 在此处填写代码
     }
     
     /// === 嵌套泛型 ===
     
     /// 包含 Option 的盒子
-    struct OptionBox<T> has copy, drop {
+    public struct OptionBox<T: store + drop> has store, drop {
         value: Option<T>,
     }
     
     /// 创建包含 Some 的盒子
-    public fun create_some_box<T>(value: T): OptionBox<T> {
+    public fun create_some_box<T: store + drop>(value: T): OptionBox<T> {
         // TODO: 创建包含 Option::Some(value) 的盒子
-        
-        OptionBox { value: Option::Some(value) }
+        // 在此处填写代码
     }
     
     /// 创建包含 None 的盒子
-    public fun create_none_box<T>(): OptionBox<T> {
+    public fun create_none_box<T: store + drop>(): OptionBox<T> {
         // TODO: 创建包含 Option::None 的盒子
-        
-        OptionBox { value: Option::None }
+        // 在此处填写代码
     }
     
     /// 获取盒子中的值（如果存在）
-    public fun unwrap_option_box<T: drop>(box: OptionBox<T>): T {
-        // TODO: 解构 OptionBox 和 Option，返回值
-        
-        let OptionBox { value } = box;
-        let Option::Some(value) = value;
-        value
+    public fun unwrap_option_box<T: store + drop>(box: OptionBox<T>): T {
+        // 在此处填写代码
     }
     
     /// === 泛型与向量 ===
@@ -220,64 +192,35 @@ module intro::intro {
     public fun first<T>(vec: &vector<T>): &T {
         // TODO: 使用 vector::borrow 获取第一个元素的引用
         // HINT: vector::borrow(vec, 0)
-        
-        vector::borrow(vec, 0)
+        // 在此处填写代码
     }
     
     /// 获取向量的最后一个元素
     public fun last<T>(vec: &vector<T>): &T {
         // TODO: 获取最后一个元素的引用
         // HINT: 先获取长度，然后使用 vector::borrow(vec, length - 1)
-        
-        let len = vector::length(vec);
-        let last_idx = len - 1;
-        vector::borrow(vec, last_idx)
+        // 在此处填写代码
     }
     
     /// 创建包含一个元素的向量
     public fun singleton<T>(item: T): vector<T> {
         // TODO: 创建包含单个元素的向量
         // HINT: vector[item] 或使用 vector::empty 然后 push_back
-        
-        vector[item]
+        // 在此处填写代码
     }
     
     /// === 泛型实用函数 ===
     
     /// 创建盒子的向量
-    public fun create_box_vector<T>(items: vector<T>): vector<Box<T>> {
+    public fun create_box_vector<T: copy + drop>(items: vector<T>): vector<Box<T>> {
         // TODO: 将向量中的每个元素包装成 Box，返回 Box 的向量
         // HINT: 遍历 items，为每个元素创建 Box
-        
-        let mut result = vector::empty<Box<T>>();
-        let i = 0;
-        let len = vector::length(&items);
-        
-        while (i < len) {
-            let item = *vector::borrow(&items, i);
-            let box = create_box(item);
-            vector::push_back(&mut result, box);
-            i = i + 1;
-        };
-        
-        result
+        // 在此处填写代码
     }
     
     /// 从盒子向量中提取值
-    public fun unwrap_boxes<T: drop>(boxes: vector<Box<T>>): vector<T> {
+    public fun unwrap_boxes<T: copy + drop>(boxes: vector<Box<T>>): vector<T> {
         // TODO: 解构每个 Box，提取值到新向量
-        
-        let mut result = vector::empty<T>();
-        let i = 0;
-        let len = vector::length(&boxes);
-        
-        while (i < len) {
-            let box = *vector::borrow(&boxes, i);
-            let Box { value } = box;
-            vector::push_back(&mut result, value);
-            i = i + 1;
-        };
-        
-        result
+        // 在此处填写代码
     }
 }

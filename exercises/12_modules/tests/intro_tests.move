@@ -13,8 +13,8 @@ module intro::intro_tests {
     #[test]
     fun test_create_point() {
         let point = intro::create_point(10, 20);
-        assert!(point.x == 10, 2);
-        assert!(point.y == 20, 3);
+        assert!(intro::point_x(&point) == 10, 2);
+        assert!(intro::point_y(&point) == 20, 3);
     }
 
     #[test]
@@ -32,23 +32,21 @@ module intro::intro_tests {
 
     #[test]
     fun test_create_some() {
-        use std::option;
         let some = intro::create_some(42);
-        assert!(option::is_some(&some), 7);
+        assert!(std::option::is_some(&some), 7);
     }
 
     #[test]
     fun test_create_none() {
-        use std::option;
         let none = intro::create_none();
-        assert!(option::is_none(&none), 8);
+        assert!(std::option::is_none(&none), 8);
     }
 
     #[test]
     fun test_create_string() {
         use std::string;
         let s = intro::create_string();
-        assert!(string::equals(&s, &string::utf8(b"Hello")), 9);
+        assert!(intro::string_equals(&s, &string::utf8(b"Hello")), 9);
     }
 
     #[test]
@@ -92,8 +90,8 @@ module intro::intro_tests {
     #[test]
     fun test_friend_module_create_point() {
         let point = friend_module::create_point(15, 25);
-        assert!(point.x == 15, 19);
-        assert!(point.y == 25, 20);
+        assert!(intro::point_x(&point) == 15, 19);
+        assert!(intro::point_y(&point) == 25, 20);
     }
 
     #[test]
@@ -105,7 +103,7 @@ module intro::intro_tests {
     #[test]
     fun test_other_module_use_public_struct() {
         let point = other_module::use_public_struct();
-        assert!(point.x == 10, 22);
-        assert!(point.y == 20, 23);
+        assert!(intro::point_x(&point) == 10, 22);
+        assert!(intro::point_y(&point) == 20, 23);
     }
 }

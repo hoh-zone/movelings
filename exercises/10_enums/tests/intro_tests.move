@@ -113,13 +113,13 @@ module intro::intro_tests {
 
     #[test]
     fun test_create_usd() {
-        let coin_type = intro::create_usd();
+        let _coin_type = intro::create_usd();
         // 测试创建成功
     }
 
     #[test]
     fun test_create_eur() {
-        let coin_type = intro::create_eur();
+        let _coin_type = intro::create_eur();
         // 测试创建成功
     }
 
@@ -147,13 +147,13 @@ module intro::intro_tests {
 
     #[test]
     fun test_create_some_ok() {
-        let maybe = intro::create_some_ok(42);
+        let _maybe = intro::create_some_ok(42);
         // 测试创建成功
     }
 
     #[test]
     fun test_create_some_err() {
-        let maybe = intro::create_some_err(99);
+        let _maybe = intro::create_some_err(99);
         // 测试创建成功
     }
 }

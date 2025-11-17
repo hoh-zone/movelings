@@ -21,7 +21,7 @@ module intro::intro_tests {
     #[test]
     fun test_duplicate() {
         let coin = intro::create_box(100);
-        let (coin1, coin2) = intro::duplicate(coin);
+        let (_coin1, _coin2) = intro::duplicate(coin);
         // 测试复制成功
     }
 
@@ -35,7 +35,7 @@ module intro::intro_tests {
     #[test]
     fun test_store_value() {
         let coin = intro::create_box(75);
-        let stored = intro::store_value(coin);
+        let _stored = intro::store_value(coin);
         // 测试存储成功
     }
 
@@ -98,39 +98,39 @@ module intro::intro_tests {
 
     #[test]
     fun test_some() {
-        let some = intro::some(42);
+        let _some = intro::some(42);
         // 测试创建成功
     }
 
     #[test]
     fun test_none() {
-        let none = intro::none<u64>();
+        let _none = intro::none<u64>();
         // 测试创建成功
     }
 
     #[test]
     fun test_copy_and_drop() {
         let coin = intro::create_box(100);
-        let copy = intro::copy_and_drop(coin);
+        let _copied = intro::copy_and_drop(coin);
         // 测试复制和丢弃
     }
 
     #[test]
     fun test_copy_drop_store() {
         let coin = intro::create_box(50);
-        let result = intro::copy_drop_store(coin);
+        let _result = intro::copy_drop_store(coin);
         // 测试成功
     }
 
     #[test]
     fun test_create_some_box() {
-        let box = intro::create_some_box(42);
+        let _box = intro::create_some_box(42);
         // 测试创建成功
     }
 
     #[test]
     fun test_create_none_box() {
-        let box = intro::create_none_box<u64>();
+        let _box = intro::create_none_box<u64>();
         // 测试创建成功
     }
 
