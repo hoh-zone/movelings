@@ -27,7 +27,7 @@ module intro::intro {
         // HINT: u64 等基本类型实现了 copy trait
         // HINT: 可以多次使用同一个值
         
-        (x, x)
+        (0, 0)
     }
     
     /// 简单类型的传递
@@ -35,7 +35,7 @@ module intro::intro {
         // TODO: 调用 helper_function 并返回结果
         // HINT: x 会被复制传递给函数
         
-        helper_function(x)
+        0
     }
     
     fun helper_function(y: u64): u64 {
@@ -49,7 +49,7 @@ module intro::intro {
         // TODO: 直接返回向量
         // HINT: 向量使用移动语义，所有权转移给返回值
         
-        vec
+        vector::empty<u64>()
     }
     
     /// 向量的所有权转移
@@ -58,7 +58,7 @@ module intro::intro {
         // HINT: 向量被移动到这个函数，可以直接使用
         // HINT: 函数结束时向量被销毁
         
-        vector::length(&vec)
+        0
     }
     
     /// === 引用和借用 ===
@@ -69,7 +69,7 @@ module intro::intro {
         // HINT: 使用 &vector<u64> 参数类型
         // HINT: 可以读取但不能修改
         
-        vector::length(vec)
+        0
     }
     
     /// 可变引用
@@ -78,7 +78,6 @@ module intro::intro {
         // HINT: 使用 &mut vector<u64> 参数类型
         // HINT: 可以修改向量内容
         
-        vector::push_back(vec, value);
     }
     
     /// 同时使用值和引用
@@ -88,9 +87,7 @@ module intro::intro {
         // HINT: 然后修改向量
         // HINT: 最后移动向量到返回值
         
-        let original_length = vector::length(&vec);
-        vector::push_back(&mut vec, 100);
-        (original_length, vec)
+        (0, vector::empty<u64>())
     }
     
     /// === 多重引用 ===
@@ -100,9 +97,7 @@ module intro::intro {
         // TODO: 创建两个不可变引用并使用
         // HINT: 可以有多个不可变引用同时存在
         
-        let len1 = vector::length(vec);
-        let len2 = vector::length(vec);
-        (len1, len2)
+        (0, 0)
     }
     
     /// === 引用的生命周期 ===
@@ -112,11 +107,7 @@ module intro::intro {
         // TODO: 在作用域内使用引用
         // HINT: 引用的生命周期不能超过被引用值的生命周期
         
-        let len = {
-            let vec_ref = &vec;
-            vector::length(vec_ref)
-        }; // vec_ref 在这里结束生命周期
-        len
+        0
     }
     
     /// === 可变性规则 ===
@@ -126,7 +117,7 @@ module intro::intro {
         // TODO: 对不可变值创建不可变引用
         // HINT: 不可变值只能创建不可变引用
         
-        vector::length(&vec)
+        0
     }
     
     /// 可变值的引用
@@ -135,9 +126,7 @@ module intro::intro {
         // HINT: 可变值可以创建不可变引用或可变引用
         // HINT: 但不能同时存在可变和不可变引用
         
-        let len = vector::length(&vec); // 不可变引用
-        vector::push_back(&mut vec, 42); // 可变引用
-        (len, vec)
+        (0, vector::empty<u64>())
     }
     
     /// === 所有权模式 ===
@@ -147,7 +136,7 @@ module intro::intro {
         // TODO: 消费向量并返回是否为空
         // HINT: 向量被移动到函数内，函数结束时被销毁
         
-        vector::is_empty(&vec)
+        false
     }
     
     /// 条件性移动
@@ -155,11 +144,7 @@ module intro::intro {
         // TODO: 根据条件决定是否移动向量
         // HINT: if 表达式中的移动语义
         
-        if (should_move) {
-            vec // 移动向量
-        } else {
-            vector::empty<u64>() // 返回新的空向量
-        }
+        vector::empty<u64>()
     }
     
     /// === 复杂的所有权场景 ===
@@ -170,12 +155,7 @@ module intro::intro {
         // HINT: 使用 vector::remove 取出元素
         // HINT: 如果向量为空，返回 (0, 空向量)
         
-        if (vector::is_empty(&vec)) {
-            (0, vec)
-        } else {
-            let first = vector::remove(&mut vec, 0);
-            (first, vec)
-        }
+        (0, vector::empty<u64>())
     }
     
     /// 向量的重建
@@ -183,9 +163,7 @@ module intro::intro {
         // TODO: 将 additional 添加到 elements 并返回
         // HINT: 需要修改向量，所以需要 mut
         
-        let mut result = elements; // 移动所有权
-        vector::push_back(&mut result, additional);
-        result
+        vector::empty<u64>()
     }
     
     /// === 错误示例（注释掉的错误代码） ===
@@ -201,19 +179,16 @@ module intro::intro {
         // vector::push_back(&mut vec, 1);     // 错误！不能同时可变借用
         
         // 正确的做法：
-        vec // 直接返回，移动所有权
+        // TODO: 直接返回向量，移动所有权
+        
+        vector::empty<u64>()
     }
     
     /// 演示引用规则
     public fun reference_rules_demo(mut vec: vector<u64>): u64 {
-        // 可以有多个不可变引用
-        let _ref1 = &vec;
-        let _ref2 = &vec;
-        let len = vector::length(_ref1);
+        // TODO: 可以有多个不可变引用，然后创建可变引用
+        // HINT: 不可变引用结束后，可以创建可变引用
         
-        // 不可变引用结束后，可以创建可变引用
-        vector::push_back(&mut vec, 999);
-        
-        len
+        0
     }
 }
